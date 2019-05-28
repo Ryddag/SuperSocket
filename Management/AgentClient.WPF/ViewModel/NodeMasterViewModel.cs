@@ -66,7 +66,7 @@ namespace SuperSocket.ServerManager.Client.ViewModel
             }
 
 #if !SILVERLIGHT
-            m_WebSocket.AllowUnstrustedCertificate = true;
+            m_WebSocket.Security.AllowUnstrustedCertificate = true;
             m_WebSocket.Closed += new EventHandler(WebSocket_Closed);
             m_WebSocket.Error += new EventHandler<ClientEngine.ErrorEventArgs>(WebSocket_Error);
             m_WebSocket.Opened += new EventHandler(WebSocket_Opened);

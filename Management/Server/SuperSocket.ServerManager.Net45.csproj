@@ -34,13 +34,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\Reference\Json.NET\Net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -68,13 +67,16 @@
       <Name>SuperSocket.Common.Net45</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Protocols\WebSocket\SuperSocket.WebSocket.Net45.csproj">
-      <Project>{DB6DD6E8-ABDE-4C4A-A3E2-DF49C074433B}</Project>
+      <Project>{db6dd6e8-abde-4c4a-a3e2-df49c074433b}</Project>
       <Name>SuperSocket.WebSocket.Net45</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SocketBase\SuperSocket.SocketBase.Net45.csproj">
       <Project>{40B77789-EA11-4C05-8F52-86711D7BCAAF}</Project>
       <Name>SuperSocket.SocketBase.Net45</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
