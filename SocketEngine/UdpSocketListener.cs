@@ -34,17 +34,18 @@ namespace SuperSocket.SocketEngine
                 m_ListenSocket = new Socket(this.EndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
                 m_ListenSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                 m_ListenSocket.Bind(this.EndPoint);
-
                 //Mono doesn't support it
                 if (Platform.SupportSocketIOControlByCodeEnum)
                 {
                     uint IOC_IN = 0x80000000;
                     uint IOC_VENDOR = 0x18000000;
                     uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
+                    uint SIO_UDP_NETRESET = IOC_IN | IOC_VENDOR | 15;
 
                     byte[] optionInValue = { Convert.ToByte(false) };
                     byte[] optionOutValue = new byte[4];
                     m_ListenSocket.IOControl((int)SIO_UDP_CONNRESET, optionInValue, optionOutValue);
+                    m_ListenSocket.IOControl((int)SIO_UDP_NETRESET, optionInValue, optionOutValue);
                 }
 
                 var eventArgs = new SocketAsyncEventArgs();
@@ -56,7 +57,6 @@ namespace SuperSocket.SocketEngine
                 int receiveBufferSize = config.ReceiveBufferSize <= 0 ? 2048 : config.ReceiveBufferSize;
                 var buffer = new byte[receiveBufferSize];
                 eventArgs.SetBuffer(buffer, 0, buffer.Length);
-
                 m_ListenSocket.ReceiveFromAsync(eventArgs);
 
                 return true;
@@ -77,7 +77,7 @@ namespace SuperSocket.SocketEngine
                 //The listen socket was closed
                 if (errorCode == 995 || errorCode == 10004 || errorCode == 10038)
                     return;
-
+                
                 OnError(new SocketException(errorCode));
             }
 
@@ -99,9 +99,9 @@ namespace SuperSocket.SocketEngine
                 catch (Exception exc)
                 {
                     OnError(exc);
-                }
             }
         }
+    }
 
         public override void Stop()
         {
